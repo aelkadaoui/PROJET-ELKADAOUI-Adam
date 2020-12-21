@@ -1,0 +1,48 @@
+LigneCommande:
+    type: entity
+    table: LIGNE_COMMANDE
+    indexes:
+        LIGNE_COMMANDE_COMMANDE_FK:
+            columns:
+                - idCommande
+        LIGNE_COMMANDE_MAILLOT0_FK:
+            columns:
+                - idMaillot
+    id:
+        idlignecommande:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: idLigneCommande
+            generator:
+                strategy: IDENTITY
+    fields:
+        quantite:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+    manyToOne:
+        idcommande:
+            targetEntity: Commande
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idCommande:
+                    referencedColumnName: idCommande
+            orphanRemoval: false
+        idmaillot:
+            targetEntity: Maillot
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idMaillot:
+                    referencedColumnName: idMaillot
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

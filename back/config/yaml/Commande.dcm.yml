@@ -1,0 +1,39 @@
+Commande:
+    type: entity
+    table: COMMANDE
+    indexes:
+        COMMANDE_CLIENT_FK:
+            columns:
+                - idClient
+    id:
+        idcommande:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: idCommande
+            generator:
+                strategy: IDENTITY
+    fields:
+        datecommande:
+            type: date
+            nullable: false
+            column: dateCommande
+        total:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+    manyToOne:
+        idclient:
+            targetEntity: Client
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idClient:
+                    referencedColumnName: idClient
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

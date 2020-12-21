@@ -1,0 +1,21 @@
+Marque:
+    type: entity
+    table: MARQUE
+    id:
+        idmarque:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: idMarque
+            generator:
+                strategy: IDENTITY
+    fields:
+        nom:
+            type: string
+            nullable: false
+            length: 256
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

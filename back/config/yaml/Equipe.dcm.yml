@@ -1,0 +1,27 @@
+Equipe:
+    type: entity
+    table: EQUIPE
+    id:
+        idequipe:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: idEquipe
+            generator:
+                strategy: IDENTITY
+    fields:
+        nom:
+            type: string
+            nullable: false
+            length: 256
+            options:
+                fixed: false
+        pays:
+            type: string
+            nullable: false
+            length: 256
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

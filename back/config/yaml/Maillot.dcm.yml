@@ -1,0 +1,77 @@
+Maillot:
+    type: entity
+    table: MAILLOT
+    indexes:
+        MAILLOT_EQUIPE0_FK:
+            columns:
+                - idEquipe
+        MAILLOT_MARQUE_FK:
+            columns:
+                - idMarque
+    id:
+        idmaillot:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: idMaillot
+            generator:
+                strategy: IDENTITY
+    fields:
+        nom:
+            type: string
+            nullable: false
+            length: 256
+            options:
+                fixed: false
+        type:
+            type: string
+            nullable: false
+            length: 256
+            options:
+                fixed: false
+        saison:
+            type: string
+            nullable: false
+            length: 256
+            options:
+                fixed: false
+        image:
+            type: string
+            nullable: false
+            length: 256
+            options:
+                fixed: false
+        prix:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+        stock:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+    manyToOne:
+        idequipe:
+            targetEntity: Equipe
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idEquipe:
+                    referencedColumnName: idEquipe
+            orphanRemoval: false
+        idmarque:
+            targetEntity: Marque
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idMarque:
+                    referencedColumnName: idMarque
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
