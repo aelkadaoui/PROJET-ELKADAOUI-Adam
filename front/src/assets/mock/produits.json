@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "nom": "Maillot de foot noir",
+    "prix": 120,
+    "categorie": "Maillot",
+    "couleur": "Noir",
+    "description": "Maillot du futur pour un futur champion",
+    "image": "img/maillot-noir.jpg"
+  },
+  {
+    "id": 2,
+    "nom": "Maillot de foot blanc",
+    "prix": 110,
+    "categorie": "Maillot",
+    "couleur": "Blanc",
+    "description": "Le maillot pour être toujours au top",
+    "image": "img/maillot-blanc.jpg"
+  },
+  {
+    "id": 3,
+    "nom": "Maillot de foot bleu",
+    "prix": 100,
+    "categorie": "Maillot",
+    "couleur": "Bleu",
+    "description": "Le maillot aussi bleu que le ciel",
+    "image": "img/maillot-bleu.jpg"
+  },
+  {
+    "id": 4,
+    "nom": "Short de foot noir",
+    "prix": 50,
+    "categorie": "Short",
+    "couleur": "Noir",
+    "description": "Le short du futur pour un futur champion",
+    "image": "img/short-noir.jpg"
+  },
+  {
+    "id": 5,
+    "nom": "Short de foot blanc",
+    "prix": 40,
+    "categorie": "Short",
+    "couleur": "Blanc",
+    "description": "Le short pour être toujours au top",
+    "image": "img/short-blanc.jpg"
+  },
+  {
+    "id": 6,
+    "nom": "Short de foot bleu",
+    "prix": 30,
+    "categorie": "Short",
+    "couleur": "Bleu",
+    "description": "Le short aussi bleu que le ciel",
+    "image": "img/short-bleu.jpg"
+  },
+  {
+    "id": 7,
+    "nom": "Paire de chaussettes de foot noire",
+    "prix": 20,
+    "categorie": "Chaussettes",
+    "couleur": "Noir",
+    "description": "La paire de chaussette du future pour un futur champion",
+    "image": "img/chaussettes-noir.jpg"
+  },
+  {
+    "id": 8,
+    "nom": "Paire de chaussettes de foot blanche",
+    "prix": 15,
+    "categorie": "Chaussettes",
+    "couleur": "Blanc",
+    "description": "La paire de chaussette pour être toujours au top",
+    "image": "img/chaussettes-blanc.jpg"
+  },
+  {
+    "id": 9,
+    "nom": "Paire de chaussettes de foot bleue",
+    "prix": 10,
+    "categorie": "Chaussettes",
+    "couleur": "Bleu",
+    "description": "La paire de chaussettes aussi bleue que le ciel",
+    "image": "img/chaussettes-bleu.jpg"
+  },
+  {
+    "id": 10,
+    "nom": "Crampons de foot noir",
+    "prix": 130,
+    "categorie": "Chaussures",
+    "couleur": "Noir",
+    "description": "Les crampons du futur pour un futur champion",
+    "image": "img/crampons-noir.jpg"
+  },
+  {
+    "id": 11,
+    "nom": "Crampons de foot blanc",
+    "prix": 120,
+    "categorie": "Chaussures",
+    "couleur": "Blanc",
+    "description": "Les crampons pour être toujours au top",
+    "image": "img/crampons-blanc.jpg"
+  },
+  {
+    "id": 12,
+    "nom": "Crampons de foot bleu",
+    "prix": 110,
+    "categorie": "Chaussures",
+    "couleur": "Bleu",
+    "description": "Les crampons aussi bleus que le ciel",
+    "image": "img/crampons-bleu.jpg"
+  },
+  {
+    "id": 13,
+    "nom": "Ballon de football",
+    "prix": 30,
+    "categorie": "Ballon",
+    "couleur": "noir",
+    "description": "Qu'est-ce que serait le football sans un ballon bleu?",
+    "image": "img/ballon-noir.jpg"
+  },
+  {
+    "id": 13,
+    "nom": "Ballon de football",
+    "prix": 30,
+    "categorie": "ballon",
+    "couleur": "blanc",
+    "description": "Qu'est-ce que serait le football sans un ballon blanc?",
+    "image": "img/ballon-blanc.jpg"
+  },
+  {
+    "id": 13,
+    "nom": "Ballon de football",
+    "prix": 30,
+    "categorie": "Ballon",
+    "couleur": "bleu",
+    "description": "Qu'est-ce que serait le football sans un ballon bleu?",
+    "image": "img/ballon-bleu.jpg"
+  }
+]

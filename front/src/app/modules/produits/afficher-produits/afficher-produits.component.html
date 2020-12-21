@@ -1,0 +1,29 @@
+<p class="text-primary">Cliquez sur une image pour accéder à une page contenant les details du produit.</p>
+<app-moteur-de-recherche (filtreEvent)="onFilterEvent($event)"></app-moteur-de-recherche>
+<div *ngIf="(produitsFiltres$ | async)?.length==0" class="alert alert-primary" role="alert">
+    Aucun produit disponible avec vos critères
+</div>
+<div class="products row d-flex justify-content-center">
+    <div *ngFor="let item of produitsFiltres$ | async" class="col-md-3">
+        <div>
+            <div class="card card-shadow-nohover mr-2 mb-2">
+                <div></div>
+                <a [routerLink]="['/produits/details', item.id]">
+                    <img alt="{{item.nom}}" class="card-img-top mt-2" src="assets/maillots/{{item.image}}.jpg">
+                </a>
+                    <div class="card-body text-center p-2">
+                        <h6 class="card-title">{{item.nom}} {{item.type}}</h6>
+                    </div>
+                    <ul class="list-group text-center py-0">
+                        <li class="list-group-item border-0 py-0"><small><b>Saison:</b> {{item.saison}}</small></li>
+                        <li class="list-group-item border-0 py-0"><small><b>Type:</b> {{item.type}}</small></li>
+                        <li class="list-group-item border-0 py-0"><small><b>Marque:</b> {{item.marque}}</small></li>
+                        <li class="list-group-item border-0 py-0"><small><b>Restant(s):</b> {{item.stock}} exemplaire(s)</small></li>
+                        <li class="list-group-item border-0 py-0"><small><b>Prix:</b> {{item.prix}} €</small></li>
+                        <button (click)="ajoutPanier(item)" class="btn btn-primary" type="button">Ajouter au Panier</button>
+                    </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
