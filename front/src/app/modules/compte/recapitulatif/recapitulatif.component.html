@@ -1,110 +1,170 @@
-<div *ngIf="(unClient$ | async) as unClient; else redirect">
-    <div class="card-body">
-        <form>
-            <h6 class="heading-small text-muted mb-4">Informations générales</h6>
-            <div class="pl-lg-4">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="form-group focused">
-                            <label class="form-control-label" for="input-username">Login</label>
-                            <input class="form-control form-control-alternative" id="input-username" placeholder="Login"
-                                   type="text" value="{{unClient.login}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="form-group focused">
-                            <label class="form-control-label" for="input-password">Mot de passe</label>
-                            <input class="form-control form-control-alternative" disabled id="input-password"
-                                   type="text" value="{{unClient.passwd}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="input-email">Email</label>
-                            <input class="form-control form-control-alternative" id="input-email" placeholder="Email"
-                                   type="email" value="{{unClient.mail}}">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="form-group focused">
-                            <label class="form-control-label" for="input-first-civility">Civilité</label>
-                            <input class="form-control form-control-alternative" id="input-first-civility"
-                                   placeholder="Civilité"
-                                   type="text" value="{{unClient.civilite}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="form-group focused">
-                            <label class="form-control-label" for="input-first-name">Prénom</label>
-                            <input class="form-control form-control-alternative" id="input-first-name"
-                                   placeholder="Prénom"
-                                   type="text" value="{{unClient.prenom}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group focused">
-                            <label class="form-control-label" for="input-last-name">Nom</label>
-                            <input class="form-control form-control-alternative" id="input-last-name" placeholder="Nom"
-                                   type="text" value="{{unClient.nom}}">
-                        </div>
-                    </div>
-                </div>
+<section class="hero">
+    <div class="hero-content pb-5 text-center">
+        <h3 class="hero-heading">Mon profil</h3>
+        <div class="row">
+            <div class="col-xl-8 offset-xl-2">
+                <p class="lead text-muted">
+                    Consultez et tenez à jour votre profil afin de faciliter vos <strong>prochaines commandes</strong>
+                </p>
             </div>
-            <hr class="my-4">
-            <!-- Contact -->
-            <h6 class="heading-small text-muted mb-4">Contact</h6>
-            <div class="pl-lg-4">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group focused">
-                            <label class="form-control-label" for="input-tel">N° de téléphone</label>
-                            <input class="form-control form-control-alternative" id="input-tel"
-                                   placeholder="N° de téléphone" type="text" value="{{unClient.tel}}">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group focused">
-                            <label class="form-control-label" for="input-address">Adresse</label>
-                            <input class="form-control form-control-alternative" id="input-address"
-                                   placeholder="Adresse" type="text" value="{{unClient.adresse}}">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="form-group focused">
-                            <label class="form-control-label" for="input-city">Ville</label>
-                            <input class="form-control form-control-alternative" id="input-city" placeholder="Ville"
-                                   type="text" value="{{unClient.ville}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group focused">
-                            <label class="form-control-label" for="input-country">Pays</label>
-                            <input class="form-control form-control-alternative" id="input-country" placeholder="Pays"
-                                   type="text" value="{{unClient.pays}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label class="form-control-label" for="input-country">Code Postal</label>
-                            <input class="form-control form-control-alternative" id="input-postal-code"
-                                   placeholder="Code Postal"
-                                   type="number" value="{{unClient.cp}}">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <!--<div class="form-group">
-                <a class="btn btn-success btn-lg btn-block" routerLink="/">Mise à jour</a><br>
-                <span>Le bouton màj n'est pas encore implémenté</span>
-            </div>-->
-        </form>
+        </div>
     </div>
-</div>
-<ng-template #redirect>
-    <p>Veuillez vous connecter.</p>
-</ng-template>
+</section>
+<section class="recapitulatif">
+    <div *ngIf="client" class="col-lg-12 col-xl-12">
+        <div class="block mb-5">
+            <div class="block-header">
+                <strong class="text-uppercase">Changer votre mot de passe</strong>
+            </div>
+            <div class="block-body">
+                <form (ngSubmit)="changerMotDePasse()" [formGroup]="passwordForm" id="form_mot_de_passe">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label" for="password_old">Ancien mot de passe</label>
+                                <input class="form-control" formControlName="old_password" id="password_old"
+                                       type="password">
+                                <div *ngIf="old_password.errors && isValidFormSubmitted != null &&
+                                    !isValidFormSubmitted" [ngClass]="'error'">
+                                    <small *ngIf="old_password.errors.required" class="text-danger">
+                                        L'ancien mot de passe est requis
+                                    </small>
+                                </div>
+                                <div *ngIf="erreur_old_password != '' && isValidFormSubmitted != null
+                                    && !isValidFormSubmitted && !old_password.errors" [ngClass]="'error'">
+                                    <small class="text-danger">{{erreur_old_password}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label" for="password_1">Nouveau mot de passe</label>
+                                <input class="form-control" formControlName="password" id="password_1" type="password">
+                                <div *ngIf="password.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
+                                     [ngClass]="'error'">
+                                    <small *ngIf="password.errors.required" class="text-danger">
+                                        Le nouveau mot de passe est requis
+                                    </small>
+                                    <small *ngIf="password.errors.pattern" class="text-danger">
+                                        Le mot de passe doit faire au moins 8 caratères et comporter au moins une
+                                        majuscule,
+                                        un caractère spécial et un chiffre
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label" for="password_2">Confirmation mot de passe</label>
+                                <input class="form-control" formControlName="password_confirmation" id="password_2"
+                                       type="password">
+                                <div *ngIf="password_confirmation.errors && isValidFormSubmitted != null
+                                    && !isValidFormSubmitted" [ngClass]="'error'">
+                                    <small *ngIf="password_confirmation.errors.required" class="text-danger">
+                                        La confirmation du mot de passe est requise
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="erreur != '' && isValidFormSubmitted != null && !isValidFormSubmitted"
+                         [ngClass]="'error'">
+                        <span class="text-danger">{{erreur}}</span>
+                    </div>
+                    <div *ngIf="success != '' && erreur_old_password == '' && erreur == '' " [ngClass]="'success'">
+                        <span class="text-success">{{success}}</span>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="far fa-save mr-2">
+                            </i>Changer mot de passe
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="block mb-5">
+            <div class="block-header"><strong class="text-uppercase">Details personnels</strong></div>
+            <div class="block-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="form-label" for="civilite">Civilite</label>
+                            <select class="form-control" id="civilite" name="civilite">
+                                <option *ngIf="client.civilite == 'Homme'" value="Homme">Homme</option>
+                                <option *ngIf="client.civilite == 'Femme'" value="Femme">Femme</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="form-label" for="nom">Nom</label>
+                            <input class="form-control" id="nom" type="text" value="{{ client.nom }}">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="form-label" for="prenom">Prenom</label>
+                            <input class="form-control" id="prenom" type="text" value="{{ client.prenom }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-12">
+                        <div class="form-group">
+                            <label class="form-label" for="adresse">Adresse</label>
+                            <input class="form-control" id="adresse" type="text" value="{{ client.adresse }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="cp">Code Postal</label>
+                            <input class="form-control" id="cp" type="text" value="{{ client.cp }}">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="ville">Ville</label>
+                            <input class="form-control" id="ville" type="text" value="{{ client.ville }}">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="pays">Pays</label>
+                            <select class="form-control" id="pays" name="pays">
+                                <ng-container *ngFor="let pays of listePays">
+                                    <option *ngIf="pays.name == client.pays" [value]="pays.name"
+                                            selected> {{ pays.name }}</option>
+                                    <option *ngIf="pays.name != client.pays"
+                                            [value]="pays.name"> {{ pays.name }}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="form-label" for="login">Login</label>
+                            <input class="form-control" disabled id="login" type="text" value="{{client.login}}">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="form-label" for="tel">Telephone</label>
+                            <input class="form-control" id="tel" type="text" value="{{client.tel}}">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-control" id="email" type="text" value="{{client.mail}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

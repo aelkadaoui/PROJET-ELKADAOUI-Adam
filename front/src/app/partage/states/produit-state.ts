@@ -1,29 +1,20 @@
-import { PanierProduit } from '../panierProduit';
-import { ProduitStatesModel } from './produit-states-model';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import {PanierProduit} from '../panierProduit';
+import {ProduitStatesModel} from './produit-states-model';
+import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {
     AjouterProduitPanier,
-    SupprimerUneQuantite,
+    AjouterUneQuantite,
     SupprimerProduitPanier,
-    ViderPanier,
-    AjouterUneQuantite
+    SupprimerUneQuantite,
+    ViderPanier
 } from './../actions/panier-action';
+import {Injectable} from "@angular/core";
 
-let x;
-
+@Injectable()
 @State<ProduitStatesModel>({
     name: 'panier',
     defaults: {
-        produits: [
-            x = new PanierProduit(1, "Angers",
-                "Domicile", "2020-2021",
-                "angers_2021_dom",
-                90,
-                10,
-                "KAPPA",
-                "Angers"
-                )
-        ]
+        produits: []
     }
 })
 export class ProduitState {
@@ -51,8 +42,8 @@ export class ProduitState {
 
     @Action(AjouterProduitPanier)
     add(
-        { getState, patchState }: StateContext<ProduitStatesModel>,
-        { payload }: AjouterProduitPanier
+        {getState, patchState}: StateContext<ProduitStatesModel>,
+        {payload}: AjouterProduitPanier
     ): void {
         const state = getState();
         const index = state.produits.findIndex((element: PanierProduit) => element.id === payload.id);
@@ -74,8 +65,7 @@ export class ProduitState {
             });
         } else {
             const majPanier = state.produits;
-            if (majPanier[index].quantite < 3)
-                majPanier[index].quantite++;
+            majPanier[index].quantite++;
 
             patchState({
                 produits: majPanier
@@ -85,18 +75,14 @@ export class ProduitState {
 
     @Action(AjouterUneQuantite)
     addOne(
-        { getState, patchState }: StateContext<ProduitStatesModel>,
-        { payload }: AjouterUneQuantite
+        {getState, patchState}: StateContext<ProduitStatesModel>,
+        {payload}: AjouterUneQuantite
     ): void {
         const state = getState();
         const index = state.produits.findIndex((element: PanierProduit) => element.id === payload.id);
         if (index !== -1) {
             const majPanier = state.produits;
             majPanier[index].quantite++;
-
-            if (majPanier[index].quantite > 3) {
-                majPanier[index].quantite = 3;
-            }
 
             patchState({
                 produits: majPanier
@@ -106,8 +92,8 @@ export class ProduitState {
 
     @Action(SupprimerUneQuantite)
     removeOne(
-        { getState, patchState }: StateContext<ProduitStatesModel>,
-        { payload }: SupprimerUneQuantite
+        {getState, patchState}: StateContext<ProduitStatesModel>,
+        {payload}: SupprimerUneQuantite
     ): void {
         const state = getState();
         const index = state.produits.findIndex((element: PanierProduit) => element.id === payload.id);
@@ -128,8 +114,8 @@ export class ProduitState {
 
     @Action(SupprimerProduitPanier)
     remove(
-        { getState, patchState }: StateContext<ProduitStatesModel>,
-        { payload }: SupprimerProduitPanier
+        {getState, patchState}: StateContext<ProduitStatesModel>,
+        {payload}: SupprimerProduitPanier
     ): void {
         const state = getState();
         const index = state.produits.findIndex((element: PanierProduit) => element.id === payload.id);
@@ -146,7 +132,7 @@ export class ProduitState {
 
     @Action(ViderPanier)
     clear(
-        { patchState }: StateContext<ProduitStatesModel>,
+        {patchState}: StateContext<ProduitStatesModel>,
     ): void {
 
         patchState({

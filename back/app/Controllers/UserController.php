@@ -32,19 +32,19 @@ class UserController
         return $response;
     }
 
-    private static function check_fields(Array $data): bool
+    private static function check_fields(array $data): bool
     {
-       return (preg_match("/[a-zA-Z]{1,256}/", $data['civilite']) ||
-           preg_match("/[A-Za-z]{1,256}/", $data['nom']) ||
-           preg_match("/[A-Za-z]{1,256}/", $data['prenom']) ||
-           preg_match("/[A-Za-z0-9 ]{1,256}/", $data['adresse']) ||
-           preg_match("/[0-9]{10,16}/", ltrim($data['tel'], '+')) ||
-           preg_match("/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/", $data['mail']) ||
-           preg_match("/[0-9]{5}/", $data['cp']) ||
-           preg_match("/[A-Za-z]{1,256}/", $data['ville']) ||
-           preg_match("/[A-Za-z]{1,256}/",$data['pays']) ||
-           preg_match("/[A-Za-z0-9]{8,256}/", $data['login']) ||
-           preg_match("/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,256}/", $data['passwd']));
+        return (preg_match("/[a-zA-Z]{1,256}/", $data['civilite']) ||
+            preg_match("/[A-Za-z]{1,256}/", $data['nom']) ||
+            preg_match("/[A-Za-z]{1,256}/", $data['prenom']) ||
+            preg_match("/[A-Za-z0-9 ]{1,256}/", $data['adresse']) ||
+            preg_match("/[0-9]{10,16}/", ltrim($data['tel'], '+')) ||
+            preg_match("/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/", $data['mail']) ||
+            preg_match("/[0-9]{5}/", $data['cp']) ||
+            preg_match("/[A-Za-z]{1,256}/", $data['ville']) ||
+            preg_match("/[A-Za-z]{1,256}/", $data['pays']) ||
+            preg_match("/[A-Za-z0-9]{8,256}/", $data['login']) ||
+            preg_match("/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,256}/", $data['passwd']));
     }
 
     public function login(Request $request, Response $response, array $args): Response
@@ -63,9 +63,24 @@ class UserController
             return $response->withStatus(401);
         }
 
+        $client = [
+            'idClient' => $client->getIdclient(),
+            'civilite' => $client->getCivilite(),
+            'nom' => $client->getNom(),
+            'prenom' => $client->getPrenom(),
+            'mail' => $client->getEmail(),
+            'tel' => $client->getTel(),
+            'adresse' => $client->getAdresse(),
+            'cp' => $client->getCp(),
+            'ville' => $client->getVille(),
+            'pays' => $client->getPays(),
+            'login' => $client->getLogin(),
+            'passwd' => $client->getPassword()
+        ];
+
         $result = [
             'success' => true,
-            'login' => $login
+            'client' => $client,
         ];
         $response = UserController::createToken($response, $login);
         $response->getBody()->write(json_encode($result));
@@ -121,7 +136,8 @@ class UserController
 
         $result = [
             "success" => true,
-            "client" => json_decode($body['client'], true)
+            "client" => json_decode($body['client'], true),
+            "id" => $client->getIdclient()
         ];
 
         $response = UserController::createToken($response, $login);
@@ -146,6 +162,7 @@ class UserController
         }
 
         $result = [
+            'id' => $client->getIdclient(),
             'civilite' => $client->getCivilite(),
             'nom' => $client->getNom(),
             'prenom' => $client->getPrenom(),
@@ -164,4 +181,35 @@ class UserController
 
         return $response->withStatus(200);
     }
+
+    public function updatePassword(Request $request, Response $response, array $args): Response
+        {
+            $body = $request->getParsedBody();
+            $login = $body['login'] ?? "";
+            $old_password = $body['old_password'] ?? "";
+            $password = $body['password'] ?? "";
+
+            $clientRepo = $this->em->getRepository('Client');
+            $client = $clientRepo->findOneBy([
+                'login' => $login,
+            ]);
+
+            if ($client == null) return $response->withStatus(401); // utilisateur introuvable
+            if ($client->getPassword() != $old_password) return $response->withStatus(401); // ancien mdp erroné
+
+            if (!preg_match("/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,256}/", $password))
+                return $response->withStatus(401); // mauvais format de mot de passe
+
+            $client->setPassword($password);
+            $this->em->persist($client);
+            $this->em->flush();
+
+            $result = [
+                "success" => true,
+            ];
+
+            $response = UserController::createToken($response, $login);
+            $response->getBody()->write(json_encode($result));
+            return $response->withStatus(200);
+        }
 }

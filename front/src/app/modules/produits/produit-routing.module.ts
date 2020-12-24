@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AfficherProduitsComponent} from './afficher-produits/afficher-produits.component';
 import {PanierComponent} from './panier/panier.component';
 import {DetailsComponent} from './details/details.component';
+import {ConfirmationPanierComponent} from "./confirmation-panier/confirmation-panier.component";
 
 const routes: Routes = [
     {
@@ -12,6 +13,10 @@ const routes: Routes = [
     {
         path: 'panier',
         component: PanierComponent
+    },
+    {
+        path: 'panier/confirmation/:id',
+        component: ConfirmationPanierComponent
     },
     {
         path: 'details/:id',

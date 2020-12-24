@@ -1,166 +1,198 @@
-<div class="card">
-    <h4 class="card-header">Inscription</h4>
-    <div class="card-body">
-        <form (ngSubmit)="onFormSubmit()" [formGroup]="userForm" id="form_inscription">
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="civilite">Civilité:</label>
-                    <select (change)="changeCivilite($event)" FormControlName="civilite" class="form-control"
-                            id="civilite"
-                            name="civilite">
-                        <option value="Homme">Homme</option>
-                        <option value="Femme">Femme</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="name">Nom</label>
-                    <input class="form-control" formControlName="nom" id="name" name="name" required type="text">
-                    <div *ngIf="nom.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
-                         [ngClass]="'error'">
-                      <span *ngIf="nom.errors.required" class="text-danger">
-                        Nom requis
-                      </span>
-                        <small *ngIf="nom.errors.pattern" class="text-danger">
-                            Nom non valide: Uniquement des lettres (256 max)
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="prenom">Prénom</label>
-                    <input class="form-control" formControlName="prenom" id="prenom" name="prenom" required type="text">
-                    <div *ngIf="prenom.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
-                         [ngClass]="'error'">
-                        <small *ngIf="prenom.errors.required" class="text-danger">
-                            Prénom requis
-                        </small>
-                        <small *ngIf="prenom.errors.pattern" class="text-danger">
-                            Prénom non valide: Uniquement des lettres (256 max)
-                        </small>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="adresse">Adresse</label>
-                    <input class="form-control" formControlName="adresse" id="adresse" name="adresse" type="text">
-                    <div *ngIf="adresse.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
-                         [ngClass]="'error'">
-                        <small *ngIf="adresse.errors.required" class="text-danger">
-                            Adresse requise
-                        </small>
-                        <small *ngIf="adresse.errors.pattern" class="text-danger">
-                            Adresse non valide: Uniquement des lettres (100 max)
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="codePostal">Code postal</label>
-                    <input class="form-control" formControlName="codePostal" id="codePostal" name="codePostal"
-                           type="text">
-                    <div *ngIf="codePostal.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
-                         [ngClass]="'error'">
-                        <small *ngIf="codePostal.errors.required" class="text-danger">
-                            Code Postal requis
-                        </small>
-                    </div>
-                </div>
-                <div class=" form-group col-md-4">
-                    <label for="ville">Ville</label>
-                    <input class="form-control" formControlName="ville" id="ville" name="ville" type="text">
-                    <div *ngIf="ville.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
-                         [ngClass]="'error'">
-                        <small *ngIf="ville.errors.required" class="text-danger">
-                            Ville requise
-                        </small>
-                        <small *ngIf="ville.errors.pattern" class="text-danger">
-                            Ville non valide: Uniquement des lettres (256 max)
-                        </small>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="pays">Pays</label>
-                    <select #t (change)="changePays($event)" (change)="setIndicatif(t.value)" FormControlName="pays"
-                            class="form-control" id="pays"
-                            name="pays">
-                        <option *ngFor="let pays of listePays"
-                                [value]="pays.name"> {{ pays.name }}
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group col-md-1">
-                    <label for="tel">Indicatif</label>
-                    <input class="form-control" formControlName="indicatif" id="indicatif" name="indicatif" type="tel">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="tel">N° de télephone</label>
-                    <input class="form-control" formControlName="tel" id="tel" name="tel" type="tel">
-                    <div *ngIf="tel.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
-                         [ngClass]="'error'">
-                        <small *ngIf="tel.errors.required" class="text-danger">
-                            Numéro de téléphone requis
-                        </small>
-                        <small *ngIf="tel.errors.pattern" class="text-danger">
-                            Numéro de téléphone non valide: entre 10 et 16 chiffres attendus
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="tel">Normes internationales</label>
-                    <input [value]="tel.value| phonePipe: indicatif.value:tel.value" class="form-control" disabled
-                           id="formatTel" name="formatTel"
-                           type="text">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="email">Email</label>
-                    <input class="form-control" formControlName="email" id="email" name="email" type="email">
-                    <div *ngIf="email.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
-                         [ngClass]="'error'">
-                        <small *ngIf="email.errors.required" class="text-danger">
-                            Email requis
-                        </small>
-                        <small *ngIf="email.errors.pattern" class="text-danger">
-                            Email non valide => exemple: mon_adresse@hotmail.com
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="login">Login</label>
-                    <input class="form-control" formControlName="login" id="login" name="login" type="text">
-                    <div *ngIf="login.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
-                         [ngClass]="'error'">
-                        <small *ngIf="login.errors.required" class="text-danger">
-                            Le mot de passe est requis
-                        </small>
-                        <small *ngIf="login.errors.pattern" class="text-danger">
-                            Login non valide: Uniquement des chiffres et des lettres (8 min/ 15 max)
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="password">Mot de passe</label>
-                    <input class="form-control" formControlName="password" id="password" name="password"
-                           type="password">
-                    <div *ngIf="password.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
-                         [ngClass]="'error'">
-                        <small *ngIf="password.errors.required" class="text-danger">
-                            Le mot de passe est requis
-                        </small>
-                        <small *ngIf="password.errors.pattern" class="text-danger">
-                            Le mot de passe doit faire au moins 8 caratères et comporter au moins une majuscule,
-                            un caractère spécial et un chiffre
-                        </small>
-                    </div>
-                </div>
-            </div>
-            <div aria-label="Basic example" class="btn-group" role="group">
-                <button class="btn btn-primary" type="submit">Enregistrer</button>
-                <button (click)="generateInputs()" class="btn btn-link" type="button">Générer données</button>
-            </div>
-        </form>
+<section class="hero">
+    <div class="container">
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a routerLink="/">Revenir à l'Accueil</a></li>
+            <li class="breadcrumb-item active">Espace Inscription</li>
+        </ol>
+        <div class="hero-content pb-5 text-center">
+            <h3 class="hero-heading mb-0">Espace Inscription</h3>
+        </div>
     </div>
-</div>
-
+</section>
+<section class="inscription">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="block">
+                    <div class="block-header">
+                        <h6 class="text-uppercase mb-0">Inscription</h6>
+                    </div>
+                    <div class="block-body">
+                        <p class="lead">Un nouveau parmi les fans de foot</p>
+                        <p class="text-muted">
+                            L'inscription permet de faciliter les étapes de la commande et de pouvoir bénéficier de
+                            promotions exclusives tout au long de l'année.
+                        </p>
+                        <hr/>
+                        <form (ngSubmit)="onFormSubmit()" [formGroup]="userForm" id="form_inscription">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="civilite">Civilité:</label>
+                                    <select (change)="changeCivilite($event)" FormControlName="civilite"
+                                            class="form-control" id="civilite" name="civilite">
+                                        <option value="Homme">Homme</option>
+                                        <option value="Femme">Femme</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="name">Nom</label>
+                                    <input class="form-control" formControlName="nom" id="name" name="name" required
+                                           type="text"/>
+                                    <div *ngIf="nom.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
+                                         [ngClass]="'error'">
+                                        <span *ngIf="nom.errors.required" class="text-danger">
+                                            Nom requis
+                                        </span>
+                                        <small *ngIf="nom.errors.pattern" class="text-danger">
+                                            Nom non valide: Uniquement des lettres (256 max)
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="prenom">Prénom</label>
+                                    <input class="form-control" formControlName="prenom" id="prenom" name="prenom"
+                                           required type="text"/>
+                                    <div *ngIf="prenom.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
+                                         [ngClass]="'error'">
+                                        <small *ngIf="prenom.errors.required" class="text-danger">
+                                            Prénom requis
+                                        </small>
+                                        <small *ngIf="prenom.errors.pattern" class="text-danger">
+                                            Prénom non valide: Uniquement des lettres (256 max)
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="adresse">Adresse</label>
+                                    <input class="form-control" formControlName="adresse" id="adresse" name="adresse"
+                                           type="text"/>
+                                    <div *ngIf="adresse.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
+                                         [ngClass]="'error'">
+                                        <small *ngIf="adresse.errors.required" class="text-danger">
+                                            Adresse requise
+                                        </small>
+                                        <small *ngIf="adresse.errors.pattern" class="text-danger">
+                                            Adresse non valide: Uniquement des lettres (100 max)
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="codePostal">Code postal</label>
+                                    <input class="form-control" formControlName="codePostal" id="codePostal"
+                                           name="codePostal" type="text"/>
+                                    <div *ngIf="codePostal.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
+                                         [ngClass]="'error'">
+                                        <small *ngIf="codePostal.errors.required" class="text-danger">
+                                            Code Postal requis
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="ville">Ville</label>
+                                    <input class="form-control" formControlName="ville" id="ville" name="ville"
+                                           type="text"/>
+                                    <div *ngIf="ville.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
+                                         [ngClass]="'error'">
+                                        <small *ngIf="ville.errors.required" class="text-danger">
+                                            Ville requise
+                                        </small>
+                                        <small *ngIf="ville.errors.pattern" class="text-danger">
+                                            Ville non valide: Uniquement des lettres (256 max)
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="pays">Pays</label>
+                                    <select #t (change)="changePays($event)" (change)="setIndicatif(t.value)"
+                                            FormControlName="pays" class="form-control" id="pays" name="pays">
+                                        <option *ngFor="let pays of listePays"
+                                                [value]="pays.name"> {{ pays.name }} </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-1">
+                                    <label for="tel">Indicatif</label>
+                                    <input class="form-control" formControlName="indicatif" id="indicatif"
+                                           name="indicatif" type="tel"/>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="tel">N° de télephone</label>
+                                    <input class="form-control" formControlName="tel" id="tel" name="tel" type="tel"/>
+                                    <div *ngIf="tel.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
+                                         [ngClass]="'error'">
+                                        <small *ngIf="tel.errors.required" class="text-danger">
+                                            Numéro de téléphone requis
+                                        </small>
+                                        <small *ngIf="tel.errors.pattern" class="text-danger">
+                                            Numéro de téléphone non valide: entre 10 et 16 chiffres attendus
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="tel">Normes internationales</label>
+                                    <input [value]="tel.value| phonePipe: indicatif.value:tel.value"
+                                           class="form-control" disabled id="formatTel" name="formatTel" type="text"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="email">Email</label>
+                                    <input class="form-control" formControlName="email" id="email" name="email"
+                                           type="email"/>
+                                    <div *ngIf="email.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
+                                         [ngClass]="'error'">
+                                        <small *ngIf="email.errors.required" class="text-danger">
+                                            Email requis
+                                        </small>
+                                        <small *ngIf="email.errors.pattern" class="text-danger">
+                                            Email non valide => exemple: mon_adresse@hotmail.com
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="login">Login</label>
+                                    <input class="form-control" formControlName="login" id="login" name="login"
+                                           type="text"/>
+                                    <div *ngIf="login.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
+                                         [ngClass]="'error'">
+                                        <small *ngIf="login.errors.required" class="text-danger">
+                                            Le mot de passe est requis
+                                        </small>
+                                        <small *ngIf="login.errors.pattern" class="text-danger">
+                                            Login non valide: Uniquement des chiffres et des lettres (8 min/ 15 max)
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="password">Mot de passe</label>
+                                    <input class="form-control" formControlName="password" id="password" name="password"
+                                           type="password"/>
+                                    <div *ngIf="password.errors && isValidFormSubmitted != null && !isValidFormSubmitted"
+                                         [ngClass]="'error'">
+                                        <small *ngIf="password.errors.required" class="text-danger">
+                                            Le mot de passe est requis
+                                        </small>
+                                        <small *ngIf="password.errors.pattern" class="text-danger">
+                                            Le mot de passe doit faire au moins 8 caratères et comporter au moins une
+                                            majuscule, un caractère spécial et un chiffre
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div aria-label="Basic example" class="btn-group" role="group">
+                                <button class="btn btn-outline-dark" type="submit">
+                                    <i class="far fa-user mr-2"></i>S'inscrire
+                                </button>
+                                <button (click)="generateInputs()" class="btn btn-link" type="button">Générer données
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

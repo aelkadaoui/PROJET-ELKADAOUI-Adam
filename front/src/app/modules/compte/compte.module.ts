@@ -8,6 +8,8 @@ import {PhonePipePipe} from './phone-pipe.pipe';
 import {ConnexionComponent} from './connexion/connexion.component';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ApiHttpInterceptor} from "./api-http-interceptor.service";
+import {CommandesComponent} from './commandes/commandes.component';
+import {CommandeComponent} from "./commande/commande.component";
 
 
 @NgModule({
@@ -16,6 +18,8 @@ import {ApiHttpInterceptor} from "./api-http-interceptor.service";
         RecapitulatifComponent,
         PhonePipePipe,
         ConnexionComponent,
+        CommandesComponent,
+        CommandeComponent,
     ],
     imports: [
         CommonModule,

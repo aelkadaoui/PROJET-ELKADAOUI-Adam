@@ -2,12 +2,13 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {InscriptionConnexion, InscriptionJWT} from '../actions/utilisateur-action';
 import {UtilisateurStateModel} from "./utilisateur-model";
 import {Injectable} from "@angular/core";
+import {Client} from "../client";
 
 @State<UtilisateurStateModel>({
     name: 'account',
     defaults: {
-        login: '',
         jwtToken: '',
+        client: new Client
     }
 })
 @Injectable()
@@ -20,7 +21,19 @@ export class UtilisateurState {
 
     @Selector()
     static getLogin(state: UtilisateurStateModel): string {
-        return state.login;
+        return state.client.login;
+    }
+
+    @Selector()
+    static getId(state: UtilisateurStateModel): number {
+        if (state.client.idClient == null)
+            return -1;
+        return state.client.idClient;
+    }
+
+    @Selector()
+    static getClient(state: UtilisateurStateModel): Client {
+        return state.client;
     }
 
     @Action(InscriptionJWT)
@@ -39,7 +52,7 @@ export class UtilisateurState {
         {payload}: InscriptionConnexion
     ): void {
         patchState({
-            login: payload
+            client: payload,
         });
     }
 }

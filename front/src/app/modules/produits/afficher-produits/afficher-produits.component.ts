@@ -70,7 +70,7 @@ export class AfficherProduitsComponent implements OnInit {
         this.filtres.next(filtres);
     }
 
-    public ajoutPanier(p: Produit): void {
+    ajoutPanier(p: Produit): void {
         this.store.dispatch(new AjouterProduitPanier(p));
     }
 }

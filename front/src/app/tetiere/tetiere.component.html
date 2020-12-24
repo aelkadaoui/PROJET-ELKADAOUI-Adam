@@ -1,32 +1,150 @@
-<nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" routerLink="/">
-        <span class="font-weight-bold">SO FOOT</span>
-    </a>
-    <div class="d-flex order-lg-1 ml-auto pr-2">
-        <ul class="navbar-nav flex-row">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/produits/panier"><i class="fas fa-cart-plus fa-lg" style="color: white;"></i></a>
-            </li>
-            <li *ngIf="(login$ | async)" class="nav-item">
-                <a class="nav-link" routerLink="/compte/afficher" routerLinkActive="active"><i class="fas fa-user-circle fa-lg" style="color: white;"></i></a>
-            </li>
-            <li *ngIf="!(login$ | async)" class="nav-item">
-                <a class="nav-link" routerLink="/compte/connexion"><i class="fas fa-user-circle fa-lg" style="color: white;"></i></a>
-            </li>
-            <li *ngIf="(login$ | async)" class="nav-item">
-                <a class="nav-link" routerLink="/" (click)="disconnect()"><i class="fas fa-sign-out-alt fa-lg" style="color: red;"></i></a>
-            </li>
-        </ul>
+<div class="top-bar">
+    <div class="container-fluid">
+        <div class="row d-flex align-items-center">
+            <div class="col-sm-7 d-none d-sm-block">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item pr-3 mr-0">
+                        <i aria-hidden="true" class="fa fa-phone"></i>
+                        123-456-789
+                    </li>
+                    <li *ngIf="(login$ | async) == '' || (login$ | async) == undefined"
+                        class="list-inline-item px-3 border-left d-none d-lg-inline-block">
+                        Livraison gratuite sur tout le site
+                    </li>
+                    <li *ngIf="login$ | async as login" class="list-inline-item px-3 border-left
+                        d-none d-lg-inline-block">
+                        Bonjour {{ login }}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-5 d-flex justify-content-end">
+                <div class="border-right px-3">
+                    <span aria-expanded="false" aria-haspopup="true" class="topbar-link">
+                        <img alt="french"
+                             class="topbar-flag"
+                             src="https://d19m59y37dris4.cloudfront.net/sell/1-4/img/france.svg">Francais
+                    </span>
+                </div>
+                <div class=" pl-3 ml-0">
+                    <span aria-expanded="false" aria-haspopup="true" id="currency"
+                          span="topbar-link">EUR
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/produits" routerLinkActive="active">Catalogue de maillots</a>
-            </li>
-        </ul>
+</div>
+<nav class="navbar navbar-expand-lg navbar-sticky navbar-airy navbar-light bg-white bg-fixed-white">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/">
+            SO FOOT
+        </a>
+        <button aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler navbar-toggler-right collapsed"
+                data-target="#navbarCollapse" data-toggle="collapse"
+                type="button">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a aria-expanded="false" aria-haspopup="true"
+                       class="nav-link " routerLink="/">
+                        Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/produits">
+                        Maillots
+                    </a>
+                </li>
+                <li *ngIf="(login$ | async)" class="nav-item">
+                    <a class="nav-link" routerLink="/compte/profil">
+                        Mon profil
+                    </a>
+                </li>
+                <li *ngIf="(login$ | async)" class="nav-item">
+                    <a class="nav-link" routerLink="/compte/commandes">
+                        Mes commandes
+                    </a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center justify-content-between justify-content-lg-end mt-1 mb-2 my-lg-0">
+                <div *ngIf="!(login$ | async)" class="nav-item"></div>
+                <div *ngIf="!(login$ | async)" class="nav-item">
+                    <a class="navbar-icon-link" routerLink="/compte/connexion">
+                        <i class="far fa-user-circle fa-lg" style="color: black;"></i>
+                        <span class="text-sm ml-2 ml-lg-0 text-uppercase text-sm font-weight-bold d-none d-sm-inline
+                                d-lg-none">Se connecter
+                        </span>
+                    </a>
+                </div>
+                <div *ngIf="(login$ | async)" class="nav-item">
+                    <a class="navbar-icon-link" routerLink="/compte/profil">
+                        <i class="far fa-user-circle fa-lg"></i>
+                        <span class="text-sm ml-2 ml-lg-0 text-uppercase text-sm font-weight-bold d-none d-sm-inline
+                               d-lg-none">Mon compte
+                        </span>
+                    </a>
+                </div>
+                <div class="nav-item dropdown">
+                    <a class="navbar-icon-link d-lg-none" routerLink="produits/panier">
+                        <i class="fas fa-cart-plus fa-lg"></i>
+                        <span class="text-sm ml-2 ml-lg-0 text-uppercase text-sm font-weight-bold d-none d-sm-inline
+                                d-lg-none">Voir panier
+                        </span>
+                    </a>
+                    <div class="d-none d-lg-block">
+                        <a aria-expanded="false" aria-haspopup="true"
+                           class="navbar-icon-link dropdown-toggle" data-target="#"
+                           data-toggle="dropdown" id="cartdetails">
+                            <i class="fas fa-cart-plus fa-lg"></i>
+                            <div class="navbar-icon-link-badge">{{ taillePanier$ | async }}</div>
+                        </a>
+                        <div *ngIf="(taillePanier$ | async) >= 0" aria-labelledby="cartdetails"
+                             class="dropdown-menu dropdown-menu-right p-4">
+                            <div class="navbar-cart-product-wrapper">
+                                <div *ngFor="let p of produits$ | async" class="navbar-cart-product">
+                                    <div class="d-flex align-items-center">
+                                        <a [routerLink]="['/produits/details', p.id]">
+                                            <img alt="{{p.nom}}" class="img-fluid navbar-cart-product-image"
+                                                 src="assets/maillots/{{p.image}}.jpg">
+                                        </a>
+                                        <div class="w-100">
+                                            <a (click)="SupprimerProduitPanier(p)" class="close text-sm mr-2">
+                                                <i class="fa fa-times"> </i></a>
+                                            <div class="pl-3">
+                                                <a [routerLink]="['/produits/details', p.id]"
+                                                   class="navbar-cart-product-link">
+                                                    {{p.nom}} {{p.saison}} {{p.type}}
+                                                </a>
+                                                <small class="d-block text-muted">Quantité: {{p.quantite}} </small>
+                                                <strong class="d-block text-sm">{{p.prix * p.quantite}} € </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="navbar-cart-total">
+                                <span class="text-uppercase text-muted">Total</span><strong
+                                    class="text-uppercase">{{total$ | async}} €</strong></div>
+                            <div class="d-flex justify-content-between">
+                                <a class="btn btn-link text-dark mr-3" routerLink="produits/panier">Voir panier
+                                    <i class="fa-arrow-right fa"></i>
+                                </a>
+                                <a class="btn btn-outline-dark" routerLink="produits/panier">Paiment</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!(login$ | async)" class="nav-item"></div>
+                <div *ngIf="(login$ | async)" class="nav-item">
+                    <a (click)="disconnect()" class="navbar-icon-link">
+                        <i class="fas fa-sign-out-alt fa-lg"></i>
+                        <span class="text-sm ml-2 ml-lg-0 text-uppercase text-sm font-weight-bold d-none d-sm-inline
+                               d-lg-none">Se déconnecter
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>
-

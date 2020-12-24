@@ -1,11 +1,13 @@
 <form [formGroup]="filtreForm" id="filterForm">
     <div class="form-group row">
         <div class="form-group col-md-3">
-            <label for="nomFiltre">Filter par nom</label>
-            <input class="form-control" formControlName="nomFiltre" id="nomFiltre" type="text">
+            <label class="form-label" for="nomFiltre">Filter par nom</label>
+            <div class="input-group mb-3">
+                <input class="form-control" formControlName="nomFiltre" id="nomFiltre" type="text">
+            </div>
         </div>
         <div class="form-group col-md-3">
-            <label for="marqueFiltre">Filtrer par marque</label>
+            <label class="form-label" for="marqueFiltre">Filtrer par marque</label>
             <div class="input-group mb-3">
                 <select class="form-control" formControlName="marqueFiltre" id="marqueFiltre">
                     <option>Toutes</option>
@@ -16,7 +18,7 @@
             </div>
         </div>
         <div class="form-group col-md-3">
-            <label for="equipeFiltre">Filtrer par équipe</label>
+            <label class="form-label" for="equipeFiltre">Filtrer par équipe</label>
             <div class="input-group mb-3">
                 <select class="form-control" formControlName="equipeFiltre" id="equipeFiltre">
                     <option>Toutes</option>
@@ -26,8 +28,8 @@
                 </select>
             </div>
         </div>
-        <div class="form-group form-group col-md-3">
-            <label for="prixMaxFiltre">Filtrer par prix maximum</label>
+        <div class="form-group col-md-3">
+            <label class="form-label" for="prixMaxFiltre">Filtrer par prix maximum</label>
             <div class="input-group mb-3">
                 <input class="form-control" formControlName="prixMaxFiltre" id="prixMaxFiltre" max="500" min="0"
                        type="number">

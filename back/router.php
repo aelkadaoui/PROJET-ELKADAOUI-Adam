@@ -8,6 +8,7 @@ use App\Controllers\UserController;
 use App\Controllers\MaillotController;
 use App\Controllers\EquipeController;
 use App\Controllers\MarqueController;
+use App\Controllers\CommandeController;
 use App\Middlewares\CorsMiddleware;
 use Tuupola\Middleware\JwtAuthentication;
 
@@ -22,6 +23,7 @@ return function (App $app) {
         $group->post('/login', UserController::class . ":login");
         $group->post('/register', UserController::class . ":register");
         $group->get('/account/{login}', UserController::class . ":getUser");
+        $group->post('/account/updatePassword', UserController::class . ":updatePassword");
     });
 
     $app->group('/maillots', function (Group $group) {
@@ -38,6 +40,12 @@ return function (App $app) {
         $group->get('/all', MarqueController::class . ":getMarques");
     });
 
+    $app->group('/commandes', function (Group $group) {
+        $group->post('/creer', CommandeController::class . ":creationCommande");
+        $group->get('/users/{id}', CommandeController::class . ":getCommandes");
+        $group->get('/{id}', CommandeController::class . ":getCommande");
+    });
+
 
     $options = [
         "attribute" => "token",
@@ -47,7 +55,7 @@ return function (App $app) {
         "algorithm" => ["HS256"],
         "secret" => $_ENV['JWT_SECRET'],
         "path" => ["/"],
-        "ignore" => ["/users/register","/users/login", "/maillots/*", "/equipes/*", "/marques/*"],
+        "ignore" => ["/users/register", "/users/login", "/users/account/updatePassword", "/maillots/*", "/equipes/*", "/marques/*", "/commandes/*"],
         "error" => function ($response, $arguments) {
             $data = array('ERREUR' => 'Connexion', 'ERREUR' => 'JWT Non valide');
             $response = $response->withStatus(401);

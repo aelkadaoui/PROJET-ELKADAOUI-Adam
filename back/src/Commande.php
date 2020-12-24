@@ -177,4 +177,35 @@ class Commande
     {
         return $this->id;
     }
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codeCommande", type="string", length=256, nullable=false)
+     */
+    private $codecommande;
+
+
+    /**
+     * Set codecommande.
+     *
+     * @param string $codecommande
+     *
+     * @return Commande
+     */
+    public function setCodecommande($codecommande)
+    {
+        $this->codecommande = $codecommande;
+
+        return $this;
+    }
+
+    /**
+     * Get codecommande.
+     *
+     * @return string
+     */
+    public function getCodecommande()
+    {
+        return $this->codecommande;
+    }
 }

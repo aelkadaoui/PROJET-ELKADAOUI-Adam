@@ -1,5 +1,6 @@
 export class Client {
 
+    public idClient: number;
     public civilite: string;
     public nom: string;
     public prenom: string;
@@ -35,6 +36,7 @@ export class Client {
     }
 
     private init(): void {
+        this.idClient = -1;
         this.civilite = '';
         this.nom = '';
         this.prenom = '';

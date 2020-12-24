@@ -5,14 +5,10 @@ export class Equipe {
         this._pays = pays
     }
 
-    public _pays: string;
+    private _pays: string;
 
     get pays(): string {
         return this._pays;
-    }
-
-    set pays(value: string) {
-        this._pays = value;
     }
 
     private _nom: string;
@@ -21,17 +17,9 @@ export class Equipe {
         return this._nom;
     }
 
-    set nom(value: string) {
-        this._nom = value;
-    }
-
     private _id: number;
 
     get id(): number {
         return this._id;
-    }
-
-    set id(value: number) {
-        this._id = value;
     }
 }

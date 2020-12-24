@@ -6,6 +6,7 @@ import {CompteService} from "../compte.service";
 import {InscriptionConnexion} from "../../../partage/actions/utilisateur-action";
 import {UtilisateurState} from "../../../partage/states/utilisateur-state";
 import {Router} from "@angular/router";
+import {Client} from "../../../partage/client";
 
 @Component({
     selector: 'app-connexion',
@@ -16,9 +17,10 @@ export class ConnexionComponent implements OnInit {
     submit: Boolean = false;
     loginForm: FormGroup;
     jwtToken$: Observable<string>;
-    loginResponse$: Observable<{ success: boolean, login: string }>;
+    loginResponse$: Observable<{ success: boolean, login: string, id: number }>;
     login: Subscription = null;
     loginSuccess: boolean = false;
+    unClient: Client = new Client;
 
     constructor(private compteService: CompteService, private store: Store, private router: Router) {
     }
@@ -47,20 +49,28 @@ export class ConnexionComponent implements OnInit {
 
     onSubmit() {
         this.submit = true;
+
         if (this.loginForm.invalid) {
             return;
         }
 
         this.loginResponse$ = this.compteService.connexion(this.loginForm.value.login, this.loginForm.value.password);
-
         this.check_login();
 
         this.login = this.loginResponse$.subscribe(body => {
             if (body.success) {
-                this.loginSuccess = true;
-                this.store.dispatch(new InscriptionConnexion(body.login));
-                this.router.navigate(['compte/afficher']);
+                this.setClient(body['client']);
+                this.store.dispatch(new InscriptionConnexion(this.unClient));
+                this.router.navigate(['produits']);
             }
         });
+
+    }
+
+    setClient(client: Client) {
+        this.unClient.client(
+            client.civilite, client.nom, client.prenom, client.adresse, client.cp, client.ville,
+            client.pays, client.tel, client.mail, client.login, client.passwd);
+        this.unClient.idClient = client.idClient;
     }
 }

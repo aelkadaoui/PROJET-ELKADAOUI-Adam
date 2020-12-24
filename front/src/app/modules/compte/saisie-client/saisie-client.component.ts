@@ -43,7 +43,8 @@ export class SaisieClientComponent implements OnInit {
         password: ['', [Validators.required, Validators.pattern(this.passwordPattern)]]
     });
 
-    constructor(private formBuilder: FormBuilder, private router: Router, private store: Store, private compteService: CompteService) {
+    constructor(private formBuilder: FormBuilder, private router: Router, private store: Store,
+                private compteService: CompteService) {
     }
 
     get civilite(): AbstractControl {
@@ -127,8 +128,9 @@ export class SaisieClientComponent implements OnInit {
 
         this.inscription = this.inscriptionResponse$.subscribe(body => {
             if (body.success) {
-                this.store.dispatch(new InscriptionConnexion(body['client'].login));
-                this.router.navigate(['compte/afficher']);
+                this.unClient.idClient = body['id'];
+                this.store.dispatch(new InscriptionConnexion(this.unClient));
+                this.router.navigate(['produits']);
             }
         });
     }

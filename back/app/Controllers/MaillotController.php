@@ -29,17 +29,19 @@ class MaillotController
         $result = [];
 
         foreach ($maillots as $maillot) {
-            array_push($result, [
-                "id" => $maillot->getIdmaillot(),
-                "nom" => $maillot->getNom(),
-                "type" => $maillot->getType(),
-                "saison" => $maillot->getSaison(),
-                "image" => $maillot->getImage(),
-                "prix" => $maillot->getPrix(),
-                "stock" => $maillot->getStock(),
-                "marque" => $maillot->getIdmarque()->getNom(),
-                "equipe" => $maillot->getIdequipe()->getNom()
-            ]);
+            if ($maillot->getStock() > 0) {
+                array_push($result, [
+                    "id" => $maillot->getIdmaillot(),
+                    "nom" => $maillot->getNom(),
+                    "type" => $maillot->getType(),
+                    "saison" => $maillot->getSaison(),
+                    "image" => $maillot->getImage(),
+                    "prix" => $maillot->getPrix(),
+                    "stock" => $maillot->getStock(),
+                    "marque" => $maillot->getIdmarque()->getNom(),
+                    "equipe" => $maillot->getIdequipe()->getNom()
+                ]);
+            }
         }
 
         shuffle($result);
@@ -77,5 +79,21 @@ class MaillotController
 
         $response->getBody()->write(json_encode($result));
         return $response->withStatus(200);
+    }
+
+    public function setStockMaillot(\Maillot $maillot, int $quantiteCommande): void
+    {
+        $maillot->setStock($maillot->getStock() - $quantiteCommande);
+        $this->em->persist($maillot);
+        $this->em->flush();
+    }
+
+    public function checkStock(\Maillot $maillot, int $quantiteCommande): bool
+    {
+        if ($maillot->getStock() - $quantiteCommande >= 0) {
+            $this->setStockMaillot($maillot, $quantiteCommande);
+            return 1;
+        }
+        return 0;
     }
 }

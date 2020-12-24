@@ -1,0 +1,6 @@
+node_modules/
+.idea/
+back/vendor/
+back/.idea/
+front/node_modules/
+front/.idea/

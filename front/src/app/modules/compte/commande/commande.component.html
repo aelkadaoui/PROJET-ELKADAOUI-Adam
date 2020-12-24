@@ -1,0 +1,138 @@
+<div *ngIf="commande && client.idClient == commande.idClient; else redirect">
+    <section class="hero">
+        <!-- Breadcrumbs -->
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a routerLink="../../commandes">Revenir aux commandes</a></li>
+            <li class="breadcrumb-item active">Commande {{commande.codeCommande}}</li>
+        </ol>
+        <!-- Hero Content-->
+        <div class="hero-content pb-5 text-center">
+            <h3 class="hero-heading">Commande {{commande.codeCommande}}</h3>
+            <div class="row">
+                <div class="col-xl-8 offset-xl-2">
+                    <p class="lead text-muted">La commande {{commande.codeCommande}}
+                        est actuellement en cours de <strong>preparation</strong></p>
+                    <p class="text-muted">Pour nous contacter: <strong>sofoot@cfai-formation.fr</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart">
+                    <div class="cart-wrapper">
+                        <div class="cart-header text-center">
+                            <div class="row">
+                                <div class="col-6">Produit</div>
+                                <div class="col-2">Prix</div>
+                                <div class="col-2">Quantite</div>
+                                <div class="col-2">Total</div>
+                            </div>
+                        </div>
+                        <div *ngFor="let ligne of lignesCommande" class="cart-body">
+                            <!-- Product-->
+                            <div class="cart-item">
+                                <div class="row d-flex align-items-center text-center">
+                                    <div class="col-6">
+                                        <div class="d-flex align-items-center">
+                                            <a [routerLink]="['/produits/details', ligne.maillot.id]">
+                                                <img alt="{{ligne.maillot.nom}}" class="card-img-top mt-2"
+                                                     src="assets/maillots/{{ligne.maillot.image}}.jpg">
+                                            </a>
+                                            <div class="cart-title text-left">
+                                                <a [routerLink]="['/produits/details']"
+                                                   class="text-uppercase text-dark">
+                                                    <strong>Maillot {{ligne.maillot.nom}}</strong>
+                                                </a>
+                                                <br>
+                                                <span
+                                                        class="text-muted text-sm">Saison: {{ligne.maillot.saison}}</span><br><span
+                                                    class="text-muted text-sm">Type: {{ligne.maillot.type}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">{{ligne.maillot.prix}} €</div>
+                                    <div class="col-2">{{ligne.quantite}}</div>
+                                    <div class="col-2 text-center">{{ligne.total}} €</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-5">
+                    <div class="col-md-6">
+                        <div class="block mb-5">
+                            <div class="block-header">
+                                <h6 class="text-uppercase mb-0">Récapicatulatif commande</h6>
+                            </div>
+                            <div class="block-body bg-light pt-1">
+                                <p class="text-sm">Les frais de livraisons et les taxes sont calculés en fonction de ce
+                                    que vous avez choisis.</p>
+                                <ul class="order-summary mb-0 list-unstyled">
+                                    <li class="order-summary-item">
+                                        <span>Sous-total commande </span><span>{{commande.totalCommande}}  €</span></li>
+                                    <li class="order-summary-item"><span>Livraison</span><span>Gratuite</span>
+                                    </li>
+                                    <li class="order-summary-item"><span>Taxe</span><span>0 €</span></li>
+                                    <li class="order-summary-item border-0"><span>Total</span><strong
+                                            class="order-summary-total">{{commande.totalCommande}} €</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="client" class="col-md-6">
+                        <div class="block-header">
+                            <h6 class="text-uppercase mb-0">Adresse de facturation</h6>
+                        </div>
+                        <div class="block-body bg-light pt-1">
+                            <p>{{client.nom}} {{client.prenom}}<br>
+                                {{client.adresse}}<br>
+                                {{client.ville}}<br>
+                                {{client.cp}}<br>
+                                <strong>{{client.pays}}</strong>
+                            </p>
+                        </div>
+                        <div class="block-header">
+                            <h6 class="text-uppercase mb-0">Adresse de livraison</h6>
+                        </div>
+                        <div class="block-body bg-light pt-1">
+                            <p>{{client.nom}} {{client.prenom}}<br>
+                                {{client.adresse}}<br>
+                                {{client.ville}}<br>
+                                {{client.cp}}<br>
+                                <strong>{{client.pays}}</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<ng-template #redirect>
+    <div>
+        <section class="hero">
+            <!-- Breadcrumbs -->
+            <ol class="breadcrumb justify-content-center">
+                <li class="breadcrumb-item"><a routerLink="../../commandes">Revenir aux commandes</a></li>
+                <li class="breadcrumb-item active">Commande Introuvable</li>
+            </ol>
+            <!-- Hero Content-->
+            <div class="hero-content pb-5 text-center">
+                <h3 class="hero-heading">Commande #{{codeCommande}} Introuvable</h3>
+                <div class="row">
+                    <div class="col-xl-8 offset-xl-2">
+                        <p class="lead text-muted">La commande #{{codeCommande}} est introuvable</p>
+                        <p class="lead text-muted">
+                            Si vous pensez que c'est une erreur, veuillez contacter le service client
+                        </p>
+                        <p class="text-muted">Pour nous contacter: <strong>sofoot@cfai-formation.fr</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <br><br>
+</ng-template>
+

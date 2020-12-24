@@ -1,87 +1,98 @@
-<!--Section: Block Content-->
-<section *ngIf="produit" class="mb-5">
-    <div class="row">
-        <div class="col-md-6 mb-4 mb-md-0">
-            <div id="mdb-lightbox-ui"></div>
-            <div class="mdb-lightbox">
-                <div class="row product-gallery mx-1">
-                    <div class="col-12 mb-0">
-                        <figure class="view overlay rounded z-depth-1 main-img">
-                            <img alt="{{produit.nom}}" class="card-img-top mt-2" src="assets/maillots/{{produit.image}}.jpg">
-                        </figure>
+<div *ngIf="produit">
+    <section class="hero">
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a routerLink="../..">Revenir aux produits</a></li>
+        </ol>
+    </section>
+    <section class="mb-5">
+        <div class="row">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <div id="mdb-lightbox-ui"></div>
+                <div class="mdb-lightbox">
+                    <div class="row product-gallery mx-1">
+                        <div class="col-12 mb-0">
+                            <figure class="view overlay rounded z-depth-1 main-img">
+                                <img alt="{{produit.nom}}" class="card-img-top mt-2"
+                                     src="assets/maillots/{{produit.image}}.jpg">
+                            </figure>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-
-            <h5>{{produit.nom}} {{produit.type}}</h5>
-            <p class="mb-2 text-muted text-uppercase small">Maillot de football</p>
-            <p><span class="mr-1"><strong>{{produit.prix}} €</strong></span></p>
-            <p class="pt-1">Notre collection est en perpétuelle changement, nous rentrons et vendons des maillots tous
-                les jours, chaque pièce est unique !
-                Profitez d'une livraison offerte sur l'ensemble de nos maillots authentiques
-            </p>
-            <div class="table-responsive">
-                <table class="table table-sm table-borderless mb-0">
-                    <tbody>
-                    <tr>
-                        <th class="pl-0 w-25" scope="row"><strong>Saison</strong></th>
-                        <td>{{produit.saison}}</td>
-                    </tr>
-                    <tr>
-                        <th class="pl-0 w-25" scope="row"><strong>Marque</strong></th>
-                        <td>{{produit.marque}}</td>
-                    </tr>
-                    <tr>
-                        <th class="pl-0 w-25" scope="row"><strong>Livraison</strong></th>
-                        <td>Europe</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <hr>
-            <div class="table-responsive mb-2">
-                <table class="table table-sm table-borderless">
-                    <tbody>
-                    <tr>
-                        <td class="pl-0 pb-0 w-25">Quantité</td>
-                    </tr>
-                    <tr>
-                        <td class="pl-0">
-                            <div>
-                                <div class="input-group">
+            <div class="col-md-6">
+                <h5>{{produit.nom}} {{produit.type}}</h5>
+                <p class="mb-2 text-muted text-uppercase small">Maillot de football</p>
+                <p><span class="mr-1"><strong>{{produit.prix}} €</strong></span></p>
+                <p class="pt-1">
+                    Notre collection est en perpétuelle changement, nous agrandissons notre collection de maillots
+                    tous les vendredis.
+                    Profitez d'une livraison offerte sur l'ensemble de nos maillots authentiques
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-sm table-borderless mb-0">
+                        <tbody>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>Saison</strong></th>
+                            <td>{{produit.saison}}</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>Marque</strong></th>
+                            <td>{{produit.marque}}</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>Stock</strong></th>
+                            <td>{{produit.stock}} pièce(s)</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <div class="table-responsive mb-2">
+                    <table class="table table-sm table-borderless">
+                        <tbody>
+                        <tr>
+                            <td class="pl-0 pb-0 w-25">Quantité</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-0">
+                                <div>
+                                    <div class="input-group">
                                     <span class="input-group-prepend">
-                                         <button type="button" (click)="SupprimerUn()"
-                                                 class="btn btn-outline-secondary btn-number">
+                                         <button (click)="SupprimerUn(produit, quantite)"
+                                                 class="btn btn-outline-secondary btn-number"
+                                                 type="button">
                                             <span class="fa fa-minus"></span>
                                         </button>
                                     </span>
-                                    <input class="quantity col-1" min="1" max="3" [ngModel]="quantite" value="1" type="number">
-                                    <span class="input-group-append">
-                                         <button type="button" (click)="AjouterUn()"
-                                                 class="btn btn-outline-secondary btn-number">
+                                        <input [ngModel]="quantite" class="quantity col-2" max="{{produit.stock}}"
+                                               min="1" type="number" value="1">
+                                        <span class="input-group-append">
+                                         <button (click)="AjouterUn(produit, quantite)"
+                                                 class="btn btn-outline-secondary btn-number"
+                                                 type="button">
                                             <span class="fa fa-plus"></span>
                                         </button>
                                     </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button (click)="AcheterMaintenant(produit, quantite)" class="btn btn-primary btn-md mr-1 mb-2"
+                        type="button">
+                    Acheter Maitenant
+                </button>
+                <button (click)="AjouterProduitPanier(produit, quantite)" class="btn btn-light btn-md mr-1 mb-2"
+                        type="button">
+                    <i class="fas fa-shopping-cart pr-2"></i>Ajouter au panier
+                </button>
             </div>
-            <button type="button" (click)="AcheterMaintenant(produit, quantite)" class="btn btn-primary btn-md mr-1 mb-2">
-                Acheter Maitenant
-            </button>
-            <button type="button" (click)="AjouterProduitPanier(produit, quantite)" class="btn btn-light btn-md mr-1 mb-2">
-                <i class="fas fa-shopping-cart pr-2"></i>Ajouter au panier
-            </button>
         </div>
-    </div>
+    </section>
 
-</section>
-<!--Section: Block Content-->
+</div>
 <script>
     $(document).ready(function () {
         // MDB Lightbox Init

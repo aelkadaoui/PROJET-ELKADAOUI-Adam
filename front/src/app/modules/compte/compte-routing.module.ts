@@ -3,6 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {SaisieClientComponent} from './saisie-client/saisie-client.component';
 import {RecapitulatifComponent} from './recapitulatif/recapitulatif.component';
 import {ConnexionComponent} from './connexion/connexion.component';
+import {CommandesComponent} from './commandes/commandes.component';
+import {CommandeComponent} from "./commande/commande.component";
 
 const routes: Routes = [
     {
@@ -10,12 +12,20 @@ const routes: Routes = [
         component: SaisieClientComponent
     },
     {
-        path: 'afficher',
+        path: 'profil',
         component: RecapitulatifComponent
     },
     {
         path: 'connexion',
         component: ConnexionComponent
+    },
+    {
+        path: 'commandes',
+        component: CommandesComponent
+    },
+    {
+        path: 'commande/:codeCommande',
+        component: CommandeComponent
     },
 ];
 

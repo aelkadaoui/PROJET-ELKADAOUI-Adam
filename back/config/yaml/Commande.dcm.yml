@@ -16,6 +16,13 @@ Commande:
             generator:
                 strategy: IDENTITY
     fields:
+        codecommande:
+            type: string
+            nullable: false
+            length: 256
+            options:
+                fixed: false
+            column: codeCommande
         datecommande:
             type: date
             nullable: false

@@ -7,9 +7,7 @@ import {Component, OnInit, Renderer2} from '@angular/core';
 })
 export class AccueilComponent implements OnInit {
 
-    constructor(
-        private renderer: Renderer2
-    ) {
+    constructor(private renderer: Renderer2) {
     }
 
     renderExternalScript(src: string): HTMLScriptElement {

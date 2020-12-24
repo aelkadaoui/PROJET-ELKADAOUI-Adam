@@ -7,6 +7,7 @@ import {ProduitComponentRoutingModule} from './produit-routing.module';
 import {RecupererProduitService} from './recuperer-produit.service';
 import {DetailsComponent} from './details/details.component';
 import {PanierComponent} from './panier/panier.component';
+import {ConfirmationPanierComponent} from './confirmation-panier/confirmation-panier.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import {PanierComponent} from './panier/panier.component';
         AfficherProduitsComponent,
         DetailsComponent,
         PanierComponent,
+        ConfirmationPanierComponent,
     ],
     imports: [
         CommonModule,

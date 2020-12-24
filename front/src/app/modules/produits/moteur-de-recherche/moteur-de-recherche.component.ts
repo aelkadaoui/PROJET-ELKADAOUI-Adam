@@ -19,9 +19,9 @@ export class MoteurDeRechercheComponent implements OnInit {
         equipeFiltre: new FormControl(''),
         prixMaxFiltre: new FormControl('')
     });
-    private filtreFormSubscription: Subscription;
     equipes$: Observable<Equipe[]>;
     marques$: Observable<Marque[]>;
+    private filtreFormSubscription: Subscription;
 
     constructor(private apiService: RecupererProduitService) {
     }

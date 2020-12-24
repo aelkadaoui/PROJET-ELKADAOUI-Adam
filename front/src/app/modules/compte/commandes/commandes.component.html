@@ -1,0 +1,42 @@
+<section class="hero">
+    <div class="hero-content pb-5 text-center">
+        <h3 class="hero-heading">Vos commandes</h3>
+        <div class="row">
+            <div class="col-xl-8 offset-xl-2">
+                <p class="lead text-muted">Vos commandes à un seul endroit</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="commandes">
+    <div *ngIf="(commandes$ | async) as commandes">
+        <table class="table table-borderless table-hover table-responsive-md">
+            <thead class="bg-light">
+            <tr>
+                <th class="py-4 text-uppercase text-sm"># Commande</th>
+                <th class="py-4 text-uppercase text-sm">Date</th>
+                <th class="py-4 text-uppercase text-sm">Status</th>
+                <th class="py-4 text-uppercase text-sm">Total</th>
+                <th class="py-4 text-uppercase text-sm">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let commande of commandes">
+                <th class="py-4 align-middle">{{commande.codeCommande}}</th>
+                <td class="py-4 align-middle">{{commande.dateCommande.date | date: 'dd/MM/yy'}}</td>
+                <td class="py-4 align-middle">
+                <span class="badge p-2 text-uppercase badge-info">
+                    En cours de préparation
+                </span>
+                </td>
+                <td class="py-4 align-middle">{{commande.totalCommande}} €</td>
+                <td class="py-4 align-middle">
+                    <a class="btn btn-outline-dark btn-sm"
+                       routerLink="../commande/{{commande.codeCommande.replace('#', '')}}">Voir
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

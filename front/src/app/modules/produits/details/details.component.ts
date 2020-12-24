@@ -5,8 +5,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RecupererProduitService} from '../recuperer-produit.service';
 import {AjouterProduitPanier} from '../../../partage/actions/panier-action';
 import {Store} from '@ngxs/store';
-import {PanierProduit} from "../../../partage/panierProduit";
-import {AjouterUneQuantite} from '../../../partage/actions/panier-action';
 
 
 @Component({
@@ -16,17 +14,20 @@ import {AjouterUneQuantite} from '../../../partage/actions/panier-action';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
 
-    public produit$: Observable<Produit>;
-    public produit: Produit;
-    private produitSubscription: Subscription;
-    public quantite: number = 1;
+    produit$: Observable<Produit>;
+    produit: Produit;
+    produitSubscription: Subscription;
+    quantite: number = 1;
 
-    constructor(private produitService: RecupererProduitService, private route: ActivatedRoute, private store: Store, private router: Router) {
+    constructor(private produitService: RecupererProduitService, private route: ActivatedRoute,
+                private store: Store, private router: Router) {
     }
 
     ngOnInit(): void {
         this.produit$ = this.produitService.getProduit(parseInt(this.route.snapshot.paramMap.get('id')));
         this.produitSubscription = this.produit$.subscribe(val => this.produit = val);
+        if (!this.produit)
+            this.router.navigate(["/"]);
     }
 
     ngOnDestroy(): void {
@@ -39,19 +40,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
     }
 
     public AcheterMaintenant(produit: Produit, quantite: number) {
+        console.log(quantite);
         this.AjouterProduitPanier(produit, quantite);
         this.router.navigate(['produits/panier']);
     }
 
-    public AjouterUn() {
-        this.quantite++;
-        if (this.quantite > 3)
-            this.quantite = 3;
+    public AjouterUn(product: Produit, quantite: number) {
+        if (quantite < product.stock)
+            this.quantite++;
     }
 
-    public SupprimerUn() {
-        this.quantite--;
-        if (this.quantite < 0)
-            this.quantite = 1;
+    public SupprimerUn(product: Produit, quantite: number) {
+        if (quantite > 1)
+            this.quantite--;
     }
 }
