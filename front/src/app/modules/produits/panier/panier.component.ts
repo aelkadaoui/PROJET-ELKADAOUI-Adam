@@ -98,8 +98,8 @@ export class PanierComponent implements OnInit, OnDestroy {
         return true;
 
     }
-    ValiderCommande(): void {
 
+    ValiderCommande(): void {
         this.getTotalCommande();
         this.getProduits();
         if (!this.verifierCommande())

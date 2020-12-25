@@ -66,6 +66,8 @@ export class ProduitState {
         } else {
             const majPanier = state.produits;
             majPanier[index].quantite++;
+            if (majPanier[index].quantite > majPanier[index].stock)
+                majPanier[index].quantite = majPanier[index].stock;
 
             patchState({
                 produits: majPanier
@@ -83,6 +85,8 @@ export class ProduitState {
         if (index !== -1) {
             const majPanier = state.produits;
             majPanier[index].quantite++;
+            if (majPanier[index].quantite > majPanier[index].stock)
+                majPanier[index].quantite = majPanier[index].stock;
 
             patchState({
                 produits: majPanier

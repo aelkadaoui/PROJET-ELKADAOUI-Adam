@@ -16,10 +16,10 @@ import {SupprimerProduitPanier} from '../partage/actions/panier-action';
 })
 export class TetiereComponent implements OnInit {
 
-    public login$: Observable<string>;
-    public produits$: Observable<PanierProduit[]>;
-    public taillePanier$: Observable<number>;
-    public total$: Observable<number>;
+    login$: Observable<string>;
+    produits$: Observable<PanierProduit[]>;
+    taillePanier$: Observable<number>;
+    total$: Observable<number>;
 
     constructor(private store: Store, private router: Router) {
     }
@@ -37,7 +37,7 @@ export class TetiereComponent implements OnInit {
         this.router.navigate(['/compte/connexion']);
     }
 
-    public SupprimerProduitPanier(p: PanierProduit): void {
+    SupprimerProduitPanier(p: PanierProduit): void {
         this.store.dispatch(new SupprimerProduitPanier(p));
     }
 

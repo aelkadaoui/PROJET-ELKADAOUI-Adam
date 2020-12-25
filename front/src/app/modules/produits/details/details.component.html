@@ -58,7 +58,7 @@
                                 <div>
                                     <div class="input-group">
                                     <span class="input-group-prepend">
-                                         <button (click)="SupprimerUn(produit, quantite)"
+                                         <button (click)="SupprimerUn()"
                                                  class="btn btn-outline-secondary btn-number"
                                                  type="button">
                                             <span class="fa fa-minus"></span>
@@ -67,7 +67,7 @@
                                         <input [ngModel]="quantite" class="quantity col-2" max="{{produit.stock}}"
                                                min="1" type="number" value="1">
                                         <span class="input-group-append">
-                                         <button (click)="AjouterUn(produit, quantite)"
+                                         <button (click)="AjouterUn(produit)"
                                                  class="btn btn-outline-secondary btn-number"
                                                  type="button">
                                             <span class="fa fa-plus"></span>
@@ -80,14 +80,20 @@
                         </tbody>
                     </table>
                 </div>
-                <button (click)="AcheterMaintenant(produit, quantite)" class="btn btn-primary btn-md mr-1 mb-2"
-                        type="button">
-                    Acheter Maitenant
-                </button>
-                <button (click)="AjouterProduitPanier(produit, quantite)" class="btn btn-light btn-md mr-1 mb-2"
-                        type="button">
-                    <i class="fas fa-shopping-cart pr-2"></i>Ajouter au panier
-                </button>
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <button class="btn btn-dark mb-1" (click)="AjouterProduitPanier(produit, quantite)">
+                            <i class="fa fa-shopping-cart mr-2"></i>
+                            Ajouter au panier
+                        </button>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="btn btn-outline-secondary mb-1" (click)="AcheterMaintenant(produit, quantite)">
+                            <i class="far fa-heart mr-2"></i>
+                            Acheter Maintenant
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
