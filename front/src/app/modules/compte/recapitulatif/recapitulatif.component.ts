@@ -7,6 +7,7 @@ import {CompteService} from "../compte.service";
 import {Router} from "@angular/router";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import pays from '../../../../assets/country.json';
+import {mergeMap} from "rxjs/operators";
 
 @Component({
     selector: 'app-recapitulatif',
@@ -14,7 +15,7 @@ import pays from '../../../../assets/country.json';
     styleUrls: ['./recapitulatif.component.css']
 })
 export class RecapitulatifComponent implements OnInit {
-    client: Client;
+    unClient$: Observable<Client>;
     passwordPattern: string = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,256}$';
     passwordForm: FormGroup = this.formBuilder.group({
         old_password: ['', [Validators.required]],
@@ -41,7 +42,6 @@ export class RecapitulatifComponent implements OnInit {
     isValidFormSubmittedUpdateClient: boolean = null;
     erreur_old_password: string;
     login: string;
-    clientSubscription: Subscription;
 
     constructor(private formBuilder: FormBuilder, private router: Router, private store: Store,
                 private compteService: CompteService) {
@@ -62,17 +62,28 @@ export class RecapitulatifComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.clientSubscription = this.store.select(UtilisateurState.getClient).subscribe(x => this.client = x)
-        if (!this.client.idClient)
-            this.router.navigate(['compte/connexion']);
-        this.old_passwordClient = this.client.passwd;
-        this.login = this.client.login;
+        this.getClient();
+    }
+
+    getClient(): void {
+        this.unClient$ = this.store.select(UtilisateurState.getLogin)
+            .pipe(
+                mergeMap(
+                    (login: string): Observable<Client> => {
+                        if (login !== '' && login) {
+                            this.login = login;
+                            this.compteService.getUser(login).subscribe(x => this.old_passwordClient = x.passwd);
+                            return this.compteService.getUser(login);
+                        } else {
+                            this.router.navigate(['/']);
+                        }
+                    }
+                )
+            );
     }
 
     ngOnDestroy(): void {
         this.checkMaj();
-        if (this.clientSubscription != null)
-            this.clientSubscription.unsubscribe();
     }
 
     checkMaj(): void {
@@ -122,7 +133,8 @@ export class RecapitulatifComponent implements OnInit {
 
         this.isValidFormSubmitted = true;
 
-        this.majResponse$ = this.compteService.majMotDePasseClient(this.login, this.password.value, this.old_passwordClient);
+        this.majResponse$ = this.compteService.majMotDePasseClient(
+            this.login, this.password.value, this.old_passwordClient);
         this.checkMaj();
 
         this.maj$ = this.majResponse$.subscribe(body => {

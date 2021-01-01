@@ -23,7 +23,7 @@ class UserController
 
         $payload = [
             'iat' => $issuedAt,
-            'exp' => $issuedAt + 6000,
+            'exp' => $issuedAt + 60,
             'userid' => $user_login
         ];
 
@@ -183,33 +183,33 @@ class UserController
     }
 
     public function updatePassword(Request $request, Response $response, array $args): Response
-        {
-            $body = $request->getParsedBody();
-            $login = $body['login'] ?? "";
-            $old_password = $body['old_password'] ?? "";
-            $password = $body['password'] ?? "";
+    {
+        $body = $request->getParsedBody();
+        $login = $body['login'] ?? "";
+        $old_password = $body['old_password'] ?? "";
+        $password = $body['password'] ?? "";
 
-            $clientRepo = $this->em->getRepository('Client');
-            $client = $clientRepo->findOneBy([
-                'login' => $login,
-            ]);
+        $clientRepo = $this->em->getRepository('Client');
+        $client = $clientRepo->findOneBy([
+            'login' => $login,
+        ]);
 
-            if ($client == null) return $response->withStatus(401); // utilisateur introuvable
-            if ($client->getPassword() != $old_password) return $response->withStatus(401); // ancien mdp erroné
+        if ($client == null) return $response->withStatus(401); // utilisateur introuvable
+        if ($client->getPassword() != $old_password) return $response->withStatus(401); // ancien mdp erroné
 
-            if (!preg_match("/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,256}/", $password))
-                return $response->withStatus(401); // mauvais format de mot de passe
+        if (!preg_match("/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,256}/", $password))
+            return $response->withStatus(401); // mauvais format de mot de passe
 
-            $client->setPassword($password);
-            $this->em->persist($client);
-            $this->em->flush();
+        $client->setPassword($password);
+        $this->em->persist($client);
+        $this->em->flush();
 
-            $result = [
-                "success" => true,
-            ];
+        $result = [
+            "success" => true,
+        ];
 
-            $response = UserController::createToken($response, $login);
-            $response->getBody()->write(json_encode($result));
-            return $response->withStatus(200);
-        }
+        $response = UserController::createToken($response, $login);
+        $response->getBody()->write(json_encode($result));
+        return $response->withStatus(200);
+    }
 }

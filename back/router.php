@@ -55,7 +55,7 @@ return function (App $app) {
         "algorithm" => ["HS256"],
         "secret" => $_ENV['JWT_SECRET'],
         "path" => ["/"],
-        "ignore" => ["/users/register", "/users/login", "/users/account/updatePassword", "/maillots/*", "/equipes/*", "/marques/*", "/commandes/*"],
+        "ignore" => ["/users/register", "/users/login", "/maillots/*", "/equipes/*", "/marques/*", "/commandes/*"],
         "error" => function ($response, $arguments) {
             $data = array('ERREUR' => 'Connexion', 'ERREUR' => 'JWT Non valide');
             $response = $response->withStatus(401);

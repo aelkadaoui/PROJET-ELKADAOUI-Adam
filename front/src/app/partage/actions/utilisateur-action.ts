@@ -3,7 +3,7 @@ import {Client} from "../client";
 export class InscriptionConnexion {
     static readonly type = '[Client] Ajout Connexion';
 
-    constructor(public payload: Client = new Client) {
+    constructor(public payload: Client) {
     }
 }
 

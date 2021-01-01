@@ -1,4 +1,4 @@
-import {UtilisateurState} from './../../partage/states/utilisateur-state';
+import {UtilisateurState} from './partage/states/utilisateur-state';
 import {
     HttpErrorResponse,
     HttpEvent,

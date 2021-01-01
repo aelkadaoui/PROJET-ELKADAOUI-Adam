@@ -1,12 +1,14 @@
 <section class="hero">
-    <div class="hero-content pb-5 text-center">
-        <h3 class="hero-heading">Maillots de football</h3>
-        <div class="row">
-            <div class="col-xl-8 offset-xl-2">
-                <p class="lead text-muted">
-                    Cliquez sur une image pour accéder à une page contenant les détails du produit
-                </p>
-            </div>
+    <div class="container">
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a routerLink="/">Revenir à l'accueil</a></li>
+            <li class="breadcrumb-item active">Maillots de football</li>
+        </ol>
+        <div class="hero-content pb-5 text-center">
+            <h3 class="hero-heading">Maillot de football</h3>
+            <p class="lead text-muted">
+                Cliquez sur une image pour accéder à une page contenant les détails du produit
+            </p>
         </div>
     </div>
 </section>
@@ -29,7 +31,7 @@
                 <div class="product-hover-overlay">
                     <a [routerLink]="['/produits/details', item.id]" class="product-hover-overlay-link"></a>
                     <div class="product-hover-overlay-buttons">
-                        <a (click)="ajoutPanier(item)" class="btn btn-outline-dark btn-product-left">
+                        <a *ngIf="item.stock > 0" (click)="ajoutPanier(item)" class="btn btn-outline-dark btn-product-left">
                             <i class="fa fa-shopping-cart"></i>
                         </a>
                         <a [routerLink]="['/produits/details', item.id]" class="btn btn-dark btn-buy">

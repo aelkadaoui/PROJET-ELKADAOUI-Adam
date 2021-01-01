@@ -44,8 +44,7 @@
                                 </div>
                             </div>
                             <div *ngIf="!loginSuccess && submit" [ngClass]="'error'">
-                                <span *ngIf="f.login.valid && f.password.valid && unClient.idClient == null"
-                                      class="text-danger">
+                                <span *ngIf="f.login.valid && f.password.valid" class="text-danger">
                                     Identifiants invalides
                                 </span>
                             </div>

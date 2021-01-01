@@ -6,8 +6,6 @@ import {SaisieClientComponent} from './saisie-client/saisie-client.component';
 import {RecapitulatifComponent} from './recapitulatif/recapitulatif.component';
 import {PhonePipePipe} from './phone-pipe.pipe';
 import {ConnexionComponent} from './connexion/connexion.component';
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {ApiHttpInterceptor} from "./api-http-interceptor.service";
 import {CommandesComponent} from './commandes/commandes.component';
 import {CommandeComponent} from "./commande/commande.component";
 
@@ -26,12 +24,7 @@ import {CommandeComponent} from "./commande/commande.component";
         FormsModule,
         ReactiveFormsModule,
         CompteRoutingModule,
-    ],
-    providers: [
-        {
-            provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true
-        }
-    ],
+    ]
 })
 export class CompteModule {
 }

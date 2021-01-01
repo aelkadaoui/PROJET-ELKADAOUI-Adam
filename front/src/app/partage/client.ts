@@ -32,10 +32,6 @@ export class Client {
     }
 
     public resetClient(): void {
-        this.init();
-    }
-
-    private init(): void {
         this.idClient = -1;
         this.civilite = '';
         this.nom = '';
@@ -49,5 +45,4 @@ export class Client {
         this.login = '';
         this.passwd = '';
     }
-
 }

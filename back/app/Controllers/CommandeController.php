@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Doctrine\ORM\EntityManager;
 use App\Controllers\MaillotController;
+use \Firebase\JWT\JWT;
 
 class CommandeController
 {
@@ -20,6 +21,21 @@ class CommandeController
         $this->maillotController = $m;
     }
 
+    private static function createToken(Response $response, int $id): Response
+    {
+
+        $issuedAt = time();
+
+        $payload = [
+            'iat' => $issuedAt,
+            'exp' => $issuedAt + 60,
+            'userid' => $id
+        ];
+
+        $token_jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], "HS256");
+        $response = $response->withHeader("Authorization", "Bearer {$token_jwt}");
+        return $response;
+    }
 
     public function setCommande(Client $client, int $total): string
     {
@@ -78,6 +94,7 @@ class CommandeController
         ];
 
 
+        $response = CommandeController::createToken($response, $idClient);
         $response->getBody()->write(json_encode($result));
         return $response->withStatus(200);
     }
@@ -153,7 +170,7 @@ class CommandeController
             "lignesCommande" => $this->getLignesCommande($commande->getIdcommande()),
         ];
 
-
+        $response = CommandeController::createToken($response, $commande->getIdclient()->getIdclient());
         $response->getBody()->write(json_encode($result));
         return $response->withStatus(200);
     }
@@ -187,6 +204,7 @@ class CommandeController
             ]);
         }
 
+        $response = CommandeController::createToken($response, $commande->getidClient()->getIdclient());
         $response->getBody()->write(json_encode($result));
         return $response->withStatus(200);
     }

@@ -7,6 +7,7 @@ import {InscriptionConnexion, InscriptionJWT} from "../partage/actions/utilisate
 import {ProduitState} from "../partage/states/produit-state";
 import {PanierProduit} from "../partage/panierProduit";
 import {SupprimerProduitPanier} from '../partage/actions/panier-action';
+import {Client} from "../partage/client";
 
 
 @Component({
@@ -32,7 +33,7 @@ export class TetiereComponent implements OnInit {
     }
 
     disconnect(): void {
-        this.store.dispatch(new InscriptionConnexion());
+        this.store.dispatch(new InscriptionConnexion(new Client));
         this.store.dispatch(new InscriptionJWT(''));
         this.router.navigate(['/compte/connexion']);
     }

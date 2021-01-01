@@ -32,8 +32,3 @@
 .carousel-inner .carousel-item-left {
     transform: translateX(0);
 }
-
-#bienvenue {
-    font-size: 1.215rem;
-    font-weight: 300;
-}

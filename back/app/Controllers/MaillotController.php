@@ -29,19 +29,17 @@ class MaillotController
         $result = [];
 
         foreach ($maillots as $maillot) {
-            if ($maillot->getStock() > 0) {
-                array_push($result, [
-                    "id" => $maillot->getIdmaillot(),
-                    "nom" => $maillot->getNom(),
-                    "type" => $maillot->getType(),
-                    "saison" => $maillot->getSaison(),
-                    "image" => $maillot->getImage(),
-                    "prix" => $maillot->getPrix(),
-                    "stock" => $maillot->getStock(),
-                    "marque" => $maillot->getIdmarque()->getNom(),
-                    "equipe" => $maillot->getIdequipe()->getNom()
-                ]);
-            }
+            array_push($result, [
+                "id" => $maillot->getIdmaillot(),
+                "nom" => $maillot->getNom(),
+                "type" => $maillot->getType(),
+                "saison" => $maillot->getSaison(),
+                "image" => $maillot->getImage(),
+                "prix" => $maillot->getPrix(),
+                "stock" => $maillot->getStock(),
+                "marque" => $maillot->getIdmarque()->getNom(),
+                "equipe" => $maillot->getIdequipe()->getNom()
+            ]);
         }
 
         shuffle($result);

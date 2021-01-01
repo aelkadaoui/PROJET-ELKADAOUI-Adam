@@ -4,7 +4,6 @@ import {Observable, Subscription} from "rxjs";
 import {Store} from "@ngxs/store";
 import {CompteService} from "../compte.service";
 import {InscriptionConnexion} from "../../../partage/actions/utilisateur-action";
-import {UtilisateurState} from "../../../partage/states/utilisateur-state";
 import {Router} from "@angular/router";
 import {Client} from "../../../partage/client";
 
@@ -16,7 +15,6 @@ import {Client} from "../../../partage/client";
 export class ConnexionComponent implements OnInit {
     submit: Boolean = false;
     loginForm: FormGroup;
-    jwtToken$: Observable<string>;
     loginResponse$: Observable<{ success: boolean, login: string, id: number }>;
     login: Subscription = null;
     loginSuccess: boolean = false;
@@ -34,7 +32,6 @@ export class ConnexionComponent implements OnInit {
             login: new FormControl('', [Validators.required]),
             password: new FormControl('', [Validators.required]),
         });
-        this.jwtToken$ = this.store.select(UtilisateurState.getJWTToken);
     }
 
     ngOnDestroy(): void {

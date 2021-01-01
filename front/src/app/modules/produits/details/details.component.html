@@ -39,15 +39,21 @@
                             <th class="pl-0 w-25" scope="row"><strong>Marque</strong></th>
                             <td>{{produit.marque}}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="produit.stock > 0; else rupture">
                             <th class="pl-0 w-25" scope="row"><strong>Stock</strong></th>
                             <td>{{produit.stock}} pièce(s)</td>
                         </tr>
+                        <ng-template #rupture>
+                            <tr>
+                                <th class="pl-0 w-25" ><strong>Stock:</strong></th>
+                                <td>Rupture de stock</td>
+                            </tr>
+                        </ng-template>
                         </tbody>
                     </table>
                 </div>
                 <hr>
-                <div class="table-responsive mb-2">
+                <div *ngIf="produit.stock > 0" class="table-responsive mb-2">
                     <table class="table table-sm table-borderless">
                         <tbody>
                         <tr>
@@ -55,8 +61,7 @@
                         </tr>
                         <tr>
                             <td class="pl-0">
-                                <div>
-                                    <div class="input-group">
+                                <div class="input-group">
                                     <span class="input-group-prepend">
                                          <button (click)="SupprimerUn()"
                                                  class="btn btn-outline-secondary btn-number"
@@ -64,23 +69,22 @@
                                             <span class="fa fa-minus"></span>
                                         </button>
                                     </span>
-                                        <input [ngModel]="quantite" class="quantity col-2" max="{{produit.stock}}"
-                                               min="1" type="number" value="1">
-                                        <span class="input-group-append">
+                                    <input [ngModel]="quantite" class="quantity col-2" max="{{produit.stock}}"
+                                           min="1" type="number" value="1">
+                                    <span class="input-group-append">
                                          <button (click)="AjouterUn(produit)"
                                                  class="btn btn-outline-secondary btn-number"
                                                  type="button">
                                             <span class="fa fa-plus"></span>
                                         </button>
                                     </span>
-                                    </div>
                                 </div>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <ul class="list-inline">
+                <ul class="list-inline" *ngIf="produit.stock > 0">
                     <li class="list-inline-item">
                         <button class="btn btn-dark mb-1" (click)="AjouterProduitPanier(produit, quantite)">
                             <i class="fa fa-shopping-cart mr-2"></i>
@@ -97,7 +101,6 @@
             </div>
         </div>
     </section>
-
 </div>
 <script>
     $(document).ready(function () {
