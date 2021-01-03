@@ -43,7 +43,7 @@ class Commande
      *   @ORM\JoinColumn(name="idClient", referencedColumnName="idClient")
      * })
      */
-    private $idclient;
+    private $idclientode;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

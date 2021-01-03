@@ -13,7 +13,7 @@ $config = Setup::createYAMLMetadataConfiguration(array(__DIR__ . "/config/yaml")
 
 $conn = array(
     'host' => $_ENV['DB_HOST'],
-    'driver' => 'pdo_mysql',
+    'driver' => 'pdo_pgsql',
     'user' => $_ENV['DB_USER'],
     'password' => $_ENV['DB_PASSWORD'],
     'dbname' => $_ENV['DB_NAME'],
