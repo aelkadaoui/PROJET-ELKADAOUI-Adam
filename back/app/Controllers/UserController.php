@@ -55,7 +55,7 @@ class UserController
 
         $clientRepo = $this->em->getRepository('Client');
         $client = $clientRepo->findOneBy([
-            'login' => $login
+            'login' => strtolower($login)
         ]);
 
         if ($client == null || $client->getPassword() != $password) {

@@ -109,10 +109,6 @@ export class SaisieClientComponent implements OnInit {
 
     }
 
-    generateInputs(): void {
-        this.jeuDeTest();
-    }
-
     onFormSubmit(): void {
         this.isValidFormSubmitted = false;
         if (this.userForm.invalid) {
@@ -141,21 +137,6 @@ export class SaisieClientComponent implements OnInit {
             this.codePostal.value, this.ville.value, this.pays.value, this.indicatif.value + this.tel.value.substring(1),
             this.email.value, this.login.value, this.password.value
         );
-    }
-
-    jeuDeTest(): void {
-        this.userForm.controls.nom.setValue('El Kadaoui');
-        this.userForm.controls.prenom.setValue('Adam');
-        this.userForm.controls.adresse.setValue('2 rue de la Kirneck');
-        this.userForm.controls.codePostal.setValue('67000');
-        this.userForm.controls.ville.setValue('Strasbourg');
-        this.userForm.controls.pays.setValue('Afghanistan');
-        this.userForm.controls.tel.setValue('0608712591');
-        this.userForm.controls.email.setValue('adam@gmail.com');
-        this.userForm.controls.login.setValue('aelkadaoui67');
-        this.userForm.controls.password.setValue('Mon_mot_de_passe67!');
-        this.setIndicatif(this.userForm.controls.pays.value);
-
     }
 
     setIndicatif(value: string): void {
